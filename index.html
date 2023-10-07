@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Joe's Hotdog Stand Order</title>
+		<style>
+			body {
+				font-family: "Avenir", sans-serif;
+				text-align: center;
+				background-color: #f5f5f5;
+				padding: 20px;
+			}
+
+			.container {
+				border: 2px solid black;
+				border-radius: 10px;
+				padding: 20px;
+				display: inline-block;
+				text-align: left;
+			}
+
+			ul {
+				list-style: none;
+				padding: 0;
+			}
+
+			li {
+				margin-bottom: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<script>
+				//Item prices
+				const HOTDOG_PRICE = 3.75;
+				const FRIES_PRICE = 3.0;
+				const SODA_PRICE = 2.5;
+
+				// Format Currency
+				function formatCurrency(amount) {
+					const roundedNumber = Math.round(amount * 100) / 100;
+
+					const numberString = roundedNumber.toString();
+
+					const [integerPart, fractionalPart] = numberString.split(".");
+
+					let currencyString = integerPart + ".";
+
+					if (!fractionalPart) {
+						currencyString += "00";
+					} else if (fractionalPart.length === 1) {
+						currencyString += fractionalPart + "0";
+					} else {
+						currencyString += fractionalPart;
+					}
+
+					return "$" + currencyString;
+				}
+
+				// Get user input
+				const numDogs = parseInt(prompt("How many hotdogs do you want?")) || 0;
+				const numFries = parseInt(prompt("How many fries do you want?")) || 0;
+				const numSoda = parseInt(prompt("How many sodas do you want?")) || 0;
+
+				// Calculate subtotal
+				const subtotal =
+					numDogs * HOTDOG_PRICE +
+					numFries * FRIES_PRICE +
+					numSoda * SODA_PRICE;
+
+				// Calculate discount
+				let discount = 0;
+				if (subtotal >= 25) {
+					discount = subtotal * 0.1;
+				}
+
+				// Calculate tax
+				const taxRate = 0.0625; // 6.25%
+				const taxAmount = (subtotal - discount) * taxRate;
+
+				// Calculate final total
+				const total = subtotal - discount + taxAmount;
+
+				// Display order information
+				document.write("<h2>Joe's Hotdog Stand Order</h2>");
+				document.write("<h4>Quantity of each item ordered:</h4>");
+				document.write("<ul>");
+				document.write(
+					"<li>Hotdogs: " +
+						numDogs +
+						" - " +
+						formatCurrency(numDogs * HOTDOG_PRICE) +
+						"</li>"
+				);
+				document.write(
+					"<li>Fries: " +
+						numFries +
+						" - " +
+						formatCurrency(numFries * FRIES_PRICE) +
+						"</li>"
+				);
+				document.write(
+					"<li>Sodas: " +
+						numSoda +
+						" - " +
+						formatCurrency(numSoda * SODA_PRICE) +
+						"</li>"
+				);
+
+				document.write("<hr>");
+
+				document.write("</ul>");
+
+				document.write(
+					"<p>Subtotal before discount: " + formatCurrency(subtotal) + "</p>"
+				);
+
+				document.write("<hr>");
+
+				document.write("<p>Discount: " + formatCurrency(discount) + "</p>");
+
+				document.write(
+					"<p>Subtotal after discount: " +
+						formatCurrency(subtotal - discount) +
+						"</p>"
+				);
+
+				document.write("<hr>");
+
+				document.write("<p>Tax amount: " + formatCurrency(taxAmount) + "</p>");
+
+				document.write("<hr>");
+
+				document.write("<h4>Final total: " + formatCurrency(total) + "</h4>");
+			</script>
+		</div>
+	</body>
+</html>
